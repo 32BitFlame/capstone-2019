@@ -7,4 +7,4 @@
 ### Game
 * Survival game with obstacles spawned by discord users
 * 2D Movement
-* Crip pixely base canvas
+* Crisp pixely base canvas
