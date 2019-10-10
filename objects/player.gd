@@ -12,13 +12,15 @@ export (int) var sprint_timer;
 var sprint_timer_iter = 0;
 export (int) var sprint_timer_diff;
 var sprint_cooldown = true;
-
+var net_iter = 0;
+export (int) var net_iter_max;
 func _ready():
 	pass
 
 func _physics_process(delta):
 	move_vector_normalized = Vector2(0,0);
 	
+		
 	if Input.is_action_pressed("sprint") && sprint_timer_iter < sprint_timer && !sprint_cooldown:
 		sprint_timer_iter+=sprint_timer_diff;
 		if(sprint_timer_iter >= sprint_timer):
@@ -41,3 +43,4 @@ func _physics_process(delta):
 		move_vector_normalized.y += 1;
 	
 	move_and_slide(move_vector_normalized * move_speed, Vector2(0,0));
+	net_iter+=1;
