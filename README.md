@@ -15,4 +15,10 @@
 |-----------|-------|
 | TestBlock | 0     |
 ### Network Diagram
-![logo] https://github.com/32BitFlame/capstone-2019/raw/master/Untitled.png
+#### Discord Bot
+  |
+  v: Sends POST request to server to update server IDs request log
+#### Game Server
+  |
+  v: Is polled by Game Client at regular intervals
+#### Game Client
