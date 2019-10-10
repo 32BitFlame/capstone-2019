@@ -14,11 +14,9 @@
 | Name      | Value |
 |-----------|-------|
 | TestBlock | 0     |
-### Network Diagram
+### Networking
 #### Discord Bot
-  |
-  v: Sends POST request to server to update server IDs request log
+Sends POST request to server to update server IDs request log
 #### Game Server
-  |
-  v: Is polled by Game Client at regular intervals
+Is polled by Game Client at regular intervals
 #### Game Client
