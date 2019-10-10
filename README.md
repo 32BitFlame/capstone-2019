@@ -18,7 +18,7 @@
 #### Discord Bot
 Sends POST request to server to update server IDs request log
 #### Game Server
-Is polled by Game Client at regular intervals
+Is polled by Game Client at regular intervals  
 Test: https://repl.it/@BenjaminHouzeng/GameServer
 #### Game Client
 Run on players PC polls game server with network controller node
