@@ -15,4 +15,4 @@
 |-----------|-------|
 | TestBlock | 0     |
 ### Network Diagram
-[logo]: https://github.com/32BitFlame/capstone-2019/blob/master/Untitled.png
+[logo]: https://github.com/32BitFlame/capstone-2019/blob/master/Untitled.png "Network Diagram"
