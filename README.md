@@ -8,3 +8,9 @@
 * Survival game with obstacles spawned by discord users
 * 2D Movement
 * Crisp pixely base canvas
+
+## Documentation
+### Enemy Codes
+| Name      | Value |
+|-----------|-------|
+| TestBlock | 0     |
