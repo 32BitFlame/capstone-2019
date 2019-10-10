@@ -8,3 +8,17 @@
 * Survival game with obstacles spawned by discord users
 * 2D Movement
 * Crisp pixely base canvas
+
+## Documentation
+### Enemy Codes
+| Name      | Value |
+|-----------|-------|
+| TestBlock | 0     |
+### Networking
+#### Discord Bot
+Sends POST request to server to update server IDs request log
+#### Game Server
+Is polled by Game Client at regular intervals  
+Test: https://repl.it/@BenjaminHouzeng/GameServer
+#### Game Client
+Run on players PC polls game server with network controller node
