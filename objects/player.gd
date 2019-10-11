@@ -17,10 +17,15 @@ export (int) var net_iter_max;
 func _ready():
 	pass
 
+func weapon_fire():
+	#Fire
+	if Input.is_action_just_pressed("fire"):
+		print_debug()
 func _physics_process(delta):
 	move_vector_normalized = Vector2(0,0);
 	
-		
+	
+	#Sprint
 	if Input.is_action_pressed("sprint") && sprint_timer_iter < sprint_timer && !sprint_cooldown:
 		sprint_timer_iter+=sprint_timer_diff;
 		if(sprint_timer_iter >= sprint_timer):
