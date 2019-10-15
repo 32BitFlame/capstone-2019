@@ -27,7 +27,6 @@ func _physics_process(delta):
 	look_at(get_global_mouse_position());
 	rotate(1.57079633);
 	
-	
 	move_vector_normalized = Vector2(0,0);
 	
 	#Sprint: Checks if player is able to sprint and the key is pressed
