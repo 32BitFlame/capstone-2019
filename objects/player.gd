@@ -21,6 +21,8 @@ func weapon_fire():
 	if Input.is_action_just_pressed("fire"):
 		print_debug()
 func _physics_process(delta):
+	look_at(get_viewport().get_mouse_position());
+	rotate(1.57079633);
 	move_vector_normalized = Vector2(0,0);
 	
 	
