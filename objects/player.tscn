@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://sprites/enemies/wolves/Grey_Wolf.png" type="Texture" id=1]
+[ext_resource path="res://sprites/Player_Assets/Base_Gun.png" type="Texture" id=1]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 31.5836
+radius = 20.0579
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
 
