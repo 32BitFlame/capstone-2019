@@ -9,7 +9,7 @@ class Server:
 
     @staticmethod
     def Requestify(args):
-        # Formats and Encodes message for efficency
+        # Formats and Encodes message for efficiency
         string = ""
         for key, value in args.items():
             string = f"{key}={value}".encode("ascii", "ignore")
