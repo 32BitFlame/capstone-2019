@@ -1,23 +1,31 @@
 extends KinematicBody2D
 
 #establishes variables
-export (int) var Walk_Speed = 200
+export (int) var Walk_Speed
+export (int) var Lower_DC_CD_Range
+export (int) var Upper_DC_CD_Range
 
 var Volacity = Vector2()
 var V_Normalized = Vector2()
 var Direction_Change_CD = 0
 
-#Wolf AI
+var Colliding = false
+
+#Enemy AI
 func _physics_process(delta):
-	#Determines how wolf will act in current situation.
-	if Direction_Change_CD == 0:
-		rotation = rand_range(0, 360)
-		Direction_Change_CD = int(rand_range(20, 120))
+	#Determines how enemy will act in current situation.
+	if !Colliding:
+		if Direction_Change_CD == 0:
+			rotation = rand_range(0, 360)
+			Direction_Change_CD = int(rand_range(Lower_DC_CD_Range, Upper_DC_CD_Range))
+		
+		Volacity = Vector2()
+		
+		Volacity = Vector2(Walk_Speed, 0).rotated(rotation)
+		
+		Direction_Change_CD -= 1
+	else:
+		rotation += rand_range(90, 270)
+		Direction_Change_CD = int(rand_range(Lower_DC_CD_Range, Upper_DC_CD_Range))
 	
-	Volacity = Vector2()
-	
-	Volacity = Vector2(Walk_Speed, 0).rotated(rotation)
-	
-	Direction_Change_CD -= 1
-	
-	move_and_slide(Volacity)
+	Colliding = move_and_collide(Volacity * delta)
