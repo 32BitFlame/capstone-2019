@@ -10,9 +10,7 @@ func _process(delta):
 	if(net_iter >= net_iter_max): #Runs code when net iter reaches a specific number of frames
 		net_iter = 0; #Resets net iter
 		# Poll http server
-		print("Polling")
 		var test = request(uri)
-		print(test)
 	net_iter+=1;
 	
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):

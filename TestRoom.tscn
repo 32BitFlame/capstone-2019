@@ -1,3 +1,4 @@
+
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://objects/NetController.tscn" type="PackedScene" id=1]
@@ -7,6 +8,7 @@
 [ext_resource path="res://objects/player.tscn" type="PackedScene" id=5]
 [ext_resource path="res://objects/player.gd" type="Script" id=6]
 
+
 [node name="TestRoom" type="Node2D"]
 
 [node name="HTTPRequest" parent="." instance=ExtResource( 1 )]
@@ -14,6 +16,7 @@ max_redirects = -1
 net_iter_max = 2000
 
 [node name="StaticBody2D" parent="." instance=ExtResource( 2 )]
+
 
 [node name="Test_Wolf" parent="." instance=ExtResource( 3 )]
 position = Vector2( 1323.91, -1609.77 )
@@ -32,11 +35,14 @@ Upper_DC_CD_Range = 200
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 1322.51, -1686.91 )
 script = ExtResource( 6 )
+
 walk_speed = 200.0
 sprint_speed = 400.0
 tired_speed = 100.0
 sprint_timer = 125
 sprint_timer_diff = 5
+melee_timer = 5
+melee_distance = 40.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
