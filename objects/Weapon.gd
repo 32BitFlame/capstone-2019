@@ -10,6 +10,6 @@ func _init(bullet_path): #DO not call
 	bullet = load(bullet_path) # Just dont
 
 func drop(x,y):
-	
+	pass
 func fire(x,y):
 	pass

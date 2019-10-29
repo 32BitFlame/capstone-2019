@@ -39,8 +39,8 @@ class StarterGun:
 		self.bullet = load(_bullet_path);
 	func _physics_process(delta):
 		var fire_button = Input.is_action_just_pressed("fire")
-		var mx = get_global_mouse_position().x
-		var my = get_global_mouse_position().y
+		var mx = parent.get_global_mouse_position().x
+		var my = parent.get_global_mouse_position().y
 		if(fire_button && _fireIter == 0):
 			var hit = self.bullet.instance()
 			hit.StartMovement(parent.position.x, parent.position.y ,mx,my);
@@ -63,17 +63,18 @@ export (int) var max_weapons
 var weapon_slot = 0
 var __weapons = [] #DO NOT SET DIRECTLY
 func add_weapon(weapon):
-	if len(__weapons)+1 > max_weapons:
+	if __weapons.size() + 1 > max_weapons:
 		__weapons[weapon_slot] = weapon
 		#Drop Weapon (WIP)
 		
 		return
-	__weapons += weapon
+	__weapons.append(weapon)
 	
 
 
 func _ready():
-	__weapons += starterGun;
+	__weapons.append(starterGun)
+	add_child(starterGun)
 	for child in get_children():
 		if(child is Sprite):
 			sprite = child #Gets child sprite object
