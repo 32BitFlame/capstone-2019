@@ -5,6 +5,11 @@ export (int) var Walk_Speed
 export (int) var Lower_DC_CD_Range
 export (int) var Upper_DC_CD_Range
 
+export (int) var Attack_Dmg
+export (int) var Attack_Spd
+
+export (bool) var ranged
+
 var Volacity = Vector2()
 var V_Normalized = Vector2()
 var Direction_Change_CD = 0
