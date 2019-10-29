@@ -27,6 +27,7 @@ _global_script_class_icons={
 [application]
 
 config/name="capstone-2019"
+run/main_scene="res://TestRoom.tscn"
 config/icon="res://icon.png"
 
 [input]

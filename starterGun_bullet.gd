@@ -7,7 +7,7 @@ func StartMovement(x,y,tx, ty):
 	started = true
 	self.position = Vector2(x,y);
 	velocityVector = Vector2(x - tx, y - ty);
-	velocityVector = velocityVector.normalized() * speed;
+	velocityVector = velocityVector.normalized() * -speed;
 
 func _physics_process(delta):
 	if(!started):

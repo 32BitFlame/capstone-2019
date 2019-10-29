@@ -26,7 +26,8 @@ export (float) var melee_distance;
 
 enum actionStates {
   none,
-  melee
+  melee,
+  gun
 }
 class StarterGun:
 	extends Weapon
@@ -38,8 +39,8 @@ class StarterGun:
 		self.bullet = load(_bullet_path);
 	func _physics_process(delta):
 		var fire_button = Input.is_action_just_pressed("fire")
-		var mx = parent.get_global_mouse_pos().x
-		var my = parent.get_parent().get_global_mouse_pos().y
+		var mx = get_global_mouse_position().x
+		var my = get_global_mouse_position().y
 		if(fire_button && _fireIter == 0):
 			var hit = self.bullet.instance()
 			hit.StartMovement(parent.position.x, parent.position.y ,mx,my);
@@ -50,19 +51,32 @@ class StarterGun:
 			_fireIter -= 1
 
 var actionSprites = {
-	actionStates.none:load("res://sprites/Player_Assets/Base_Gun.png"),
-	actionStates.melee:load("res://sprites/Player_Assets/Melee_attack.png")
+	actionStates.none:load("res://sprites/Player_Assets/Player.png"),
+	actionStates.melee:load("res://sprites/Player_Assets/Melee_attack.png"),
+	actionStates.gun:load("res://sprites/Player_Assets/Base_Gun.png")
 }
-var starterGun = StarterGun.new("res://starterGun_bullet.tscn", self);
+var starterGun = StarterGun.new("res://starterGun_bullet.tscn", self)
 var action_lock = 0;
 var cur_action = actionStates.none
-var sprite;
+var sprite
+export (int) var max_weapons
+var weapon_slot = 0
+var __weapons = [] #DO NOT SET DIRECTLY
+func add_weapon(weapon):
+	if len(__weapons)+1 > max_weapons:
+		__weapons[weapon_slot] = weapon
+		#Drop Weapon (WIP)
+		
+		return
+	__weapons += weapon
+	
+
+
 func _ready():
-	add_child(starterGun)
+	__weapons += starterGun;
 	for child in get_children():
 		if(child is Sprite):
-			sprite = child
-
+			sprite = child #Gets child sprite object
 
 func _physics_process(delta):
 	# Rotates to face player
