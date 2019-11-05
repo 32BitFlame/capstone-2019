@@ -8,6 +8,8 @@ export (int) var Upper_DC_CD_Range
 export (int) var Attack_Dmg
 export (int) var Attack_Spd
 
+export (int) var Hit_Points
+
 export (bool) var ranged
 
 var Volacity = Vector2()
@@ -16,9 +18,13 @@ var Direction_Change_CD = 0
 
 var Colliding = false
 
+#var Player = get_Node()
+#var Player_Distance = Player.translation - translation
+
 #Enemy AI
 func _physics_process(delta):
 	#Determines how enemy will act in current situation.
+	
 	if !Colliding:
 		if Direction_Change_CD == 0:
 			rotation = rand_range(0, 360)
