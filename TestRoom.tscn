@@ -57,7 +57,7 @@ margin_right = 1832.51
 margin_bottom = -1389.91
 script = ExtResource( 7 )
 
-[node name="TextureProgress" type="TextureProgress" parent="MarginContainer"]
+[node name="Healthbar" type="TextureProgress" parent="MarginContainer"]
 margin_right = 1022.0
 margin_bottom = 595.0
 grow_horizontal = 0
