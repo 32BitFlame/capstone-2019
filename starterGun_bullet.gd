@@ -1,12 +1,12 @@
 extends KinematicBody2D
-const speed = 200;
+const speed = 500;
 var velocityVector;
 var started = false;
 
 func StartMovement(x,y,tx, ty):
 	started = true
 	self.position = Vector2(x,y);
-	velocityVector = Vector2(x - tx, y - ty);
+	velocityVector = Vector2(x - tx,y -ty);
 	velocityVector = velocityVector.normalized() * -speed;
 
 func _physics_process(delta):
