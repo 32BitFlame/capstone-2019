@@ -18,8 +18,7 @@ var Direction_Change_CD = 0
 
 var Colliding = false
 
-#var Player = get_Node()
-#var Player_Distance = Player.translation - translation
+export(NodePath) var pathToPlayer
 
 #Enemy AI
 func _physics_process(delta):
