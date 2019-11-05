@@ -1,4 +1,5 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
+
 
 [ext_resource path="res://objects/NetController.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Map.tscn" type="PackedScene" id=2]
@@ -15,21 +16,9 @@ net_iter_max = 200
 
 [node name="StaticBody2D" parent="." instance=ExtResource( 2 )]
 
-[node name="Test_Wolf" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1323.91, -1609.77 )
-script = ExtResource( 4 )
-Walk_Speed = 300
-Lower_DC_CD_Range = 100
-Upper_DC_CD_Range = 200
 
-[node name="Test_Wolf2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 1060.17, -1617.64 )
-script = ExtResource( 4 )
-Walk_Speed = 300
-Lower_DC_CD_Range = 100
-Upper_DC_CD_Range = 200
+[node name="Player" parent="." instance=ExtResource( 4 )]
 
-[node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 1322.51, -1686.91 )
 walk_speed = 200.0
 sprint_speed = 400.0

@@ -26,7 +26,7 @@ const Wolf_Instance = preload("res://Grey_wolf.tscn")
 func _ready():
 	pass # Replace with function body.
 
-func _Enemy_Selection():
+func Enemy_Selection():
 	Random_Int = rand_range(0, 1)
 	Random_Int = round(Random_Int)
 	if Random_Int == 0:
@@ -36,7 +36,7 @@ func _Enemy_Selection():
 		Selected_Enemy = "Bee"
 		EN = 1
 
-func _Enemy_Info():
+func Enemy_Info():
 	if EN == 0:
 		Spawn_Number = 10
 		Spawn_Variance_X = 10
@@ -46,7 +46,7 @@ func _Enemy_Info():
 		Spawn_Variance_X = 30
 		Spawn_Variance_Y = 30
 
-func _Spawn_Enemy(): #This function is suppose to create a new enemy.
+func Spawn_Enemy(): #This function is suppose to create a new enemy.
 	if EN == 0:
 		for i in range(3):
 			var Grab_Instance = Wolf_Instance.instance()
@@ -66,9 +66,9 @@ func _Spawn_Enemy(): #This function is suppose to create a new enemy.
 func _process(delta):
 	if Cooldown == 0:
 		if Selected_Enemy == "":
-			_Enemy_Selection()
-		_Enemy_Info()
-		_Spawn_Enemy()
+			Enemy_Selection()
+		Enemy_Info()
+		Spawn_Enemy()
 		Selected_Enemy == ""
 		Cooldown = 1000
 	else:
