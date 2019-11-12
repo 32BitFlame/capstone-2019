@@ -25,10 +25,8 @@ func _physics_process(delta):
 	if Player_Detect == true:
 		Volacity = Vector2()
 		
-		self.look_at(Vector2())
-		
-		Volacity = Vector2(Walk_Speed, 0)
-	elif !Colliding:
+		Volacity = Vector2(Walk_Speed, 0).rotated(self.get_angle_to(Vector2(0, 0)))
+	elif !Colliding && Player_Detect == false:
 		if Direction_Change_CD == 0:
 			rotation = rand_range(0, 360)
 			Direction_Change_CD = int(rand_range(Lower_DC_CD_Range, Upper_DC_CD_Range))
@@ -38,17 +36,20 @@ func _physics_process(delta):
 		Volacity = Vector2(Walk_Speed, 0).rotated(rotation)
 		
 		Direction_Change_CD -= 1
-	else:
+	elif Colliding:
 		rotation += rand_range(90, 270)
 		Direction_Change_CD = int(rand_range(Lower_DC_CD_Range, Upper_DC_CD_Range))
 	
 	Colliding = move_and_collide(Volacity * delta)
 
-func Set_Angle(target_pos):
-	pass
+func _on_Area2D_body_shape_entered(body_id, body, body_shape, area_shape):
+	var strBody = str(body)
+	if strBody == "[KinematicBody2D:1225]":
+		print(body)
+		Player_Detect = true
 
-func _on_Area2D_body_entered(body):
-	Player_Detect = true
-
-func _on_Area2D_body_exited(body):
-	Player_Detect = false
+func _on_Area2D_body_shape_exited(body_id, body, body_shape, area_shape):
+	var strBody = str(body)
+	if strBody == "[KinematicBody2D:1225]":
+		print(body)
+		Player_Detect = false
