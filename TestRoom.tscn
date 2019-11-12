@@ -16,9 +16,9 @@ net_iter_max = 2000
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1322.51, -1686.91 )
-walk_speed = 200.0
-sprint_speed = 400.0
-tired_speed = 100.0
+walk_speed = 400.0
+sprint_speed = 800.0
+tired_speed = 400.0
 sprint_timer = 125
 sprint_timer_diff = 5
 melee_timer = 5

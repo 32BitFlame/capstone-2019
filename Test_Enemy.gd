@@ -17,14 +17,18 @@ var V_Normalized = Vector2()
 var Direction_Change_CD = 0
 
 var Colliding = false
-
-export(NodePath) var pathToPlayer
+var Player_Detect = false
 
 #Enemy AI
 func _physics_process(delta):
 	#Determines how enemy will act in current situation.
-	
-	if !Colliding:
+	if Player_Detect == true:
+		Volacity = Vector2()
+		
+		self.look_at(Vector2())
+		
+		Volacity = Vector2(Walk_Speed, 0)
+	elif !Colliding:
 		if Direction_Change_CD == 0:
 			rotation = rand_range(0, 360)
 			Direction_Change_CD = int(rand_range(Lower_DC_CD_Range, Upper_DC_CD_Range))
@@ -39,3 +43,12 @@ func _physics_process(delta):
 		Direction_Change_CD = int(rand_range(Lower_DC_CD_Range, Upper_DC_CD_Range))
 	
 	Colliding = move_and_collide(Volacity * delta)
+
+func Set_Angle(target_pos):
+	pass
+
+func _on_Area2D_body_entered(body):
+	Player_Detect = true
+
+func _on_Area2D_body_exited(body):
+	Player_Detect = false
