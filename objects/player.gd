@@ -116,7 +116,6 @@ func add_weapon(weapon):
 	add_child(starterGun)
 
 func _ready():
-	healthbar = get_parent().get_node("MarginContainer/TextureProgress")
 	add_weapon(starterGun)
 	for child in get_children():
 		if(child is Sprite):
@@ -186,7 +185,8 @@ func _physics_process(delta):
 		get_parent().add_child(weapon_drop)
 		
 	if Input.is_action_just_pressed("debug_damage1"):
-		health -= 1
+		print("Damage");
+		damage(3);
 	#Checks for button presses and sets movement vector accordingly
 	move_vector_normalized.x += _castBoolToInt(Input.is_action_pressed("ui_right"))
 	move_vector_normalized.x -= _castBoolToInt(Input.is_action_pressed("ui_left"))
@@ -209,8 +209,10 @@ func _draw():
 		draw_line(position, get_global_mouse_position(), Color.red, 100000000000000000, true)
 		
 func damage(amount: float):
+	print("Damage")
 	health -= amount
 	print(amount);
+	print("Health" + String(health))
 	if(health < 0.1): 
 		emit_signal("gameover") # Emits gameover signal to be recieved by any listening objects
 		print("Gameover")
