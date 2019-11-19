@@ -4,7 +4,6 @@ onready var meleeHitbox = preload("res://Melee_Hitbox.tscn")
 
 onready var meleeSprite = load("res://sprites/Player_Assets/Melee_attack.png")
 onready var gunSprite = load("res://sprites/Player_Assets/Base_Gun.png")
-
 export (float) var walk_speed;
 export (float) var sprint_speed;
 export (float) var tired_speed;
@@ -14,6 +13,8 @@ export (int) var sprint_timer_diff;
 
 var sprint_timer_iter = 0;
 var sprint_cooldown = true;
+
+var healthbar;
 
 export (float) var max_health;
 var health = max_health;
@@ -34,10 +35,12 @@ class StarterGun:
 	var parent
 	var firerate = 30;
 	var _fireIter = 0;
+	
 	func _init(_bullet_path, _parent).(_bullet_path):
 		self.parent = _parent
 		self.bullet = load(_bullet_path);
-	func _physics_process(delta):
+		_name = "Starter"
+	func fire_check():
 		var fire_button = Input.is_action_just_pressed("fire")
 		var mx = parent.get_global_mouse_position().x
 		var my = parent.get_global_mouse_position().y
@@ -45,41 +48,83 @@ class StarterGun:
 			var hit = self.bullet.instance()
 			hit.StartMovement(parent.position.x, parent.position.y ,mx,my);
 			parent.get_parent().add_child(hit)
-			print(String(mx) + ", " + String(my))
+			_fireIter = 60
 			
 		if(_fireIter > 0):
 			_fireIter -= 1
 
+class TestGun2:
+	extends Weapon
+	var parent
+	var firerate = 2;
+	var _fireIter = 0;
+	var accuracy = 0.5;
+	onready var lines = []
+	var shootVectorx
+	var shootVectory
+	
+	func _init(_bullet_path, _parent).(_bullet_path):
+		self.parent = _parent
+		self.bullet = load(_bullet_path);
+		_name = "TestGun"
+	func fire_check():
+		var fire_button = Input.is_action_pressed("fire")
+		var mx = parent.get_global_mouse_position().x
+		var my = parent.get_global_mouse_position().y
+		if(fire_button && _fireIter == 0):
+			var hit = self.bullet.instance()
+			var ox = parent.position.x
+			var oy = parent.position.y
+			var angle = rand_range(-accuracy,accuracy)
+			print("angle: " + String(angle))
+			var shootVectorx = ox + cos(angle) * (mx - ox) - sin(angle) * (my - oy)
+			var shootVectory = oy + sin(angle) * (mx - ox) + cos(angle) * (my - oy)
+			var shootVector = Vector2(shootVectorx, shootVectory)
+			hit.StartMovement(parent.position.x, parent.position.y ,shootVector.x, shootVector.y);
+			parent.get_parent().add_child(hit)
+			_fireIter = firerate
+			
+			
+		if(_fireIter > 0):
+			_fireIter -= 1
+	
 var actionSprites = {
 	actionStates.none:load("res://sprites/Player_Assets/Player.png"),
 	actionStates.melee:load("res://sprites/Player_Assets/Melee_attack.png"),
 	actionStates.gun:load("res://sprites/Player_Assets/Base_Gun.png")
 }
 var starterGun = StarterGun.new("res://starterGun_bullet.tscn", self)
+var testGun = TestGun2.new("res://starterGun_bullet.tscn", self)
 var action_lock = 0;
 var cur_action = actionStates.none
 var sprite
 export (int) var max_weapons
 var weapon_slot = 0
 var __weapons = [] #DO NOT SET DIRECTLY
+var weapon_drop_scene = load("res://gunDrop.tscn")
+
 func add_weapon(weapon):
-	if __weapons.size() + 1 > max_weapons:
+	
+	if __weapons.size() + 1 > max_weapons: #Checks if there is enough slots
+		var _weapon = __weapons[weapon_slot]
+		var weapon_drop = weapon_drop_scene.instance()
+		get_tree().get_current_scene().add_child(weapon_drop)
+		weapon_drop.start(position.x, position.y, _weapon)
 		__weapons[weapon_slot] = weapon
-		#Drop Weapon (WIP)
-		
 		return
 	__weapons.append(weapon)
-	
-
+	add_child(starterGun)
 
 func _ready():
-	__weapons.append(starterGun)
-	add_child(starterGun)
+	add_weapon(starterGun)
 	for child in get_children():
 		if(child is Sprite):
 			sprite = child #Gets child sprite object
+			
 
 func _physics_process(delta):
+#	healthbar.value = health
+	
 	# Rotates to face player
 	look_at(get_global_mouse_position());
 	rotate(1.57079633); # Rotates 1.57 degrees
@@ -101,6 +146,22 @@ func _physics_process(delta):
 	
 	move_vector_normalized = Vector2(0,0);
 	
+	#Item pickup:
+	if Input.is_action_just_pressed("get_weapon"):
+		print("E")
+		#print("mouse {mx}, {my}; self {x}, {y}".format({"mx":get_global_mouse_position().x, "my":get_global_mouse_position().y, "x":position.x, "y":position.y}))
+		var space_state = get_world_2d().get_direct_space_state()
+		var result = space_state.intersect_ray( position, get_global_mouse_position())
+		result.empty()
+		if not result.empty():
+			var obj = result.collider
+			print("hit")
+			if obj.has_method("get_weapon"):
+				var _weapon = obj.get_weapon(self, null)
+				add_weapon(_weapon);
+				print(_weapon);
+				
+				
 	#Sprint: Checks if player is able to sprint and the key is pressed
 	if Input.is_action_pressed("sprint") && sprint_timer_iter < sprint_timer && !sprint_cooldown:
 		sprint_timer_iter+=sprint_timer_diff;
@@ -115,6 +176,17 @@ func _physics_process(delta):
 		elif sprint_cooldown == true:
 			sprint_cooldown = false
 	
+	if Input.is_action_just_pressed("ui_accept"): #Test: Spawns a weapon drop
+		#Debug
+		var weapon_drop = weapon_drop_scene.instance()
+		var vectorPlace = Vector2(position.y, position.y) + Vector2(10,0).rotated(rotation)
+		weapon_drop.start(position.x + 100, position.y, testGun)
+		weapon_drop.set_name("weapon_drop")
+		get_parent().add_child(weapon_drop)
+		
+	if Input.is_action_just_pressed("debug_damage1"):
+		print("Damage");
+		damage(3);
 	#Checks for button presses and sets movement vector accordingly
 	move_vector_normalized.x += _castBoolToInt(Input.is_action_pressed("ui_right"))
 	move_vector_normalized.x -= _castBoolToInt(Input.is_action_pressed("ui_left"))
@@ -127,12 +199,20 @@ func _physics_process(delta):
 	
 	sprite.texture = actionSprites[cur_action]
 	
+	__weapons[weapon_slot].fire_check()
 
 func _castBoolToInt(boolVal):
 	return 1 if boolVal else 0
 
+func _draw():
+	if Input.is_action_pressed("get_weapon"):
+		draw_line(position, get_global_mouse_position(), Color.red, 100000000000000000, true)
+		
 func damage(amount: float):
+	print("Damage")
 	health -= amount
 	print(amount);
+	print("Health" + String(health))
 	if(health < 0.1): 
 		emit_signal("gameover") # Emits gameover signal to be recieved by any listening objects
+		print("Gameover")
