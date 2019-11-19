@@ -1,6 +1,7 @@
 extends Area2D
 class_name Weapon # Abstract Do not Instantiate
 
+var _name;
 var bullet;
 var sprite;
 var plr_sprite;
