@@ -78,16 +78,16 @@ func _on_Area2D_body_shape_entered(body_id, body, body_shape, area_shape):
 	var strBody_id = str(body_id)
 	var strBody_shape = str(body_shape)
 	var strArea_shape = str(area_shape)
-	#if strBody == "[KinematicBody2D:1238]":
-		#Player_Detect = true
-	print(body)
-	print(strBody_id)
-	print(strBody_shape)
-	print(strArea_shape)
+	if strBody == "[KinematicBody2D:1239]":
+		Player_Detect = true
+		print(body)
+		print(strBody_id)
+		print(strBody_shape)
+		print(strArea_shape)
 
 
 func _on_Area2D_body_shape_exited(body_id, body, body_shape, area_shape):
 	var strBody = str(body)
-	if strBody == "[KinematicBody2D:1238]":
+	if strBody == "[KinematicBody2D:1239]":
 		print(body)
 		Player_Detect = false
