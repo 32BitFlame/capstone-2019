@@ -1,4 +1,5 @@
 extends KinematicBody2D
+signal damage
 signal gameover
 onready var meleeHitbox = preload("res://Melee_Hitbox.tscn")
 
@@ -116,6 +117,7 @@ func add_weapon(weapon):
 	add_child(starterGun)
 
 func _ready():
+	health = max_health # Health is zero otherwise
 	add_weapon(starterGun)
 	for child in get_children():
 		if(child is Sprite):
@@ -184,9 +186,9 @@ func _physics_process(delta):
 		weapon_drop.set_name("weapon_drop")
 		get_parent().add_child(weapon_drop)
 		
-	if Input.is_action_just_pressed("debug_damage1"):
-		print("Damage");
-		damage(3);
+	#if Input.is_action_just_pressed("debug_damage1"):
+	#	print("Damage");
+	#	damage(3);
 	#Checks for button presses and sets movement vector accordingly
 	move_vector_normalized.x += _castBoolToInt(Input.is_action_pressed("ui_right"))
 	move_vector_normalized.x -= _castBoolToInt(Input.is_action_pressed("ui_left"))
@@ -208,11 +210,15 @@ func _draw():
 	if Input.is_action_pressed("get_weapon"):
 		draw_line(position, get_global_mouse_position(), Color.red, 100000000000000000, true)
 		
-func damage(amount: float):
-	print("Damage")
-	health -= amount
-	print(amount);
-	print("Health" + String(health))
-	if(health < 0.1): 
-		emit_signal("gameover") # Emits gameover signal to be recieved by any listening objects
-		print("Gameover")
+func damage(amount: float, alignment: bool = false):
+	print(health)
+	# True is bad, False is good
+	if (alignment):
+		print("Damage")
+		health -= amount
+		emit_signal("damage", health)
+		print(amount);
+		print("Health " + String(health))
+		if(health < 0.1): 
+			emit_signal("gameover") # Emits gameover signal to be recieved by any listening objects
+			print("Gameover")

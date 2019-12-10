@@ -7,7 +7,7 @@ var origin = null;
 func StartMovement(x,y,tx, ty):
 	started = true
 	self.position = Vector2(x,y);
-	velocityVector = Vector2(x - tx,y -ty);
+	velocityVector = Vector2(x - tx,y - ty);
 	velocityVector = velocityVector.normalized() * -speed;
 
 func _physics_process(delta):
@@ -17,5 +17,5 @@ func _physics_process(delta):
 
 func _on_Area2D_body_entered(body):
 	if(body.has_method("damage") && body):
-		body.damage(damage);
+		body.damage(damage, false);
 		

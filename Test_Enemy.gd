@@ -39,3 +39,7 @@ func _physics_process(delta):
 		Direction_Change_CD = int(rand_range(Lower_DC_CD_Range, Upper_DC_CD_Range))
 	
 	Colliding = move_and_collide(Volacity * delta)
+	
+func damage(amount: float, alignment: bool = true):
+	print("Enemy")
+	get_parent().remove_child(self)

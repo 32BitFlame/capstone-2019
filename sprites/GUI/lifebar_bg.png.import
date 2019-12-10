@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Stamina_Bar_Fill.png-598c6895da89f5c1852376b4ee455da9.stex"
+path="res://.import/lifebar_bg.png-ebfb248bb10590a4f4cdabb9fbcfc7f6.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/GUI_Assets/Stamina_Bar_Fill.png"
-dest_files=[ "res://.import/Stamina_Bar_Fill.png-598c6895da89f5c1852376b4ee455da9.stex" ]
+source_file="res://sprites/GUI/lifebar_bg.png"
+dest_files=[ "res://.import/lifebar_bg.png-ebfb248bb10590a4f4cdabb9fbcfc7f6.stex" ]
 
 [params]
 

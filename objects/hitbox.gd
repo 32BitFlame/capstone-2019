@@ -12,4 +12,4 @@ func _physics_process(delta):
 
 func _on_Area2D_body_entered(body):
 	if(body.has_method("damage") && body != origin_obj): # Checks if method exists on object and that the object is not the node of origin
-		body.damage(damage)
+		body.damage(damage) # TODO: check

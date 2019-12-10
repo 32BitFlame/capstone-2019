@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Health_Bar_Frame.png-79fb8e105cced7f59462f1f8fb0a5914.stex"
+path="res://.import/label_EP.png-74f0fbba647ad7f05038da0257a50c6c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/GUI_Assets/Health_Bar_Frame.png"
-dest_files=[ "res://.import/Health_Bar_Frame.png-79fb8e105cced7f59462f1f8fb0a5914.stex" ]
+source_file="res://sprites/GUI/label_EP.png"
+dest_files=[ "res://.import/label_EP.png-74f0fbba647ad7f05038da0257a50c6c.stex" ]
 
 [params]
 
