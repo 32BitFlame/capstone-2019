@@ -66,7 +66,8 @@ class FusionRifle:
 	var my = 0;
 	var is_firing = false;
 	var prev_frame_fire = false;
-	var ready = false;
+	var ready = true;
+	var accuracy = 0.1;
 	func _init(_bullet_path, _parent).(_bullet_path):
 		self.parent = _parent
 		self.bullet = load(_bullet_path);
@@ -77,34 +78,41 @@ class FusionRifle:
 		ready = true
 	func _create_bullet():
 		var hit = self.bullet.instance()
-		hit.StartMovement(parent.position.x, parent.position.y ,mx,my, parent);
-		parent.get_parent().add_child(hit)
+		var ox = parent.position.x
+		var oy = parent.position.y
+		var angle = rand_range(-accuracy,accuracy)
+		print("angle: " + String(angle))
+		var shootVectorx = ox + cos(angle) * (mx - ox) - sin(angle) * (my - oy)
+		var shootVectory = oy + sin(angle) * (mx - ox) + cos(angle) * (my - oy)
+		var shootVector = Vector2(shootVectorx, shootVectory)
+		hit.StartMovement(parent.position.x, parent.position.y ,shootVector.x, shootVector.y, parent);
 	func fire_check():
 		if(!ready):
 			return
 		var current_fire = Input.is_action_pressed("fire")
 		var lifted_fire = Input.is_action_just_released("fire")
 		if(lifted_fire && !is_firing):
+			print("reset2");
 			_charge_iter = chargetime
 			print("reset")
 		if(current_fire && !is_firing):
 			_charge_iter-=1
-			print(_charge_iter)
+			print("start")
 			
 		if(_charge_iter == 0):
 			is_firing = true
 			_charge_iter = chargetime
+			print("boomer");
 		if(is_firing):
 			if(_fireIter == 0):
 				#Fire
-				print("fire")
-#				_create_bullet()
+				_create_bullet()
 				_fireIter = difference_per_round
+				print("fire")
 			_fireIter-=1
-			
+		
 		
 		prev_frame_fire = current_fire;
-		
 
 class TestGun2:
 	extends Weapon
@@ -232,7 +240,7 @@ func _physics_process(delta):
 		#Debug
 		var weapon_drop = weapon_drop_scene.instance()
 		var vectorPlace = Vector2(position.y, position.y) + Vector2(10,0).rotated(rotation)
-		weapon_drop.start(position.x + 100, position.y, TestGun2.new("res://starterGun_bullet.tscn", self))
+		weapon_drop.start(position.x + 100, position.y, FusionRifle.new("res://starterGun_bullet.tscn", self))
 		weapon_drop.set_name("weapon_drop")
 		get_parent().add_child(weapon_drop)
 		
