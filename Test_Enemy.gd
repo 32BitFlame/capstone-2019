@@ -22,17 +22,25 @@ var Player
 var Colliding = false
 var Player_Detect = false
 
+var SpriteNode
+
 func _ready():
 	Player = get_parent().get_node("Player")
+	SpriteNode = get_node("Sprite")
 
 #Enemy AI
 func _physics_process(delta):
 	#Determines how enemy will act in current situation.
 	if Player_Detect == true:
-		Player_Location = Vector2(Player.position.x, Player.position.y)
+		var Current_Rotation = self.rotation
+		Player = self.get_parent().get_node("Player")
+		Player_Location = Vector2()
+		Player_Location = Player.get_position()
+		self.look_at(Player_Location)
+		Current_Rotation = self.rotation
 		
 		Volacity = Vector2()
-		Volacity = Vector2(Walk_Speed, 0).rotated(self.get_angle_to(Player_Location))
+		Volacity = Vector2(Walk_Speed, 0).rotated(Current_Rotation)
 	elif !Colliding && Player_Detect == false:
 		if Direction_Change_CD == 0:
 			rotation = rand_range(0, 360)
@@ -50,12 +58,18 @@ func _physics_process(delta):
 
 func _on_Area2D_body_shape_entered(body_id, body, body_shape, area_shape):
 	var strBody = str(body)
-	if strBody == "[KinematicBody2D:1225]":
-		print(body)
+	var strBody_id = str(body_id)
+	var strBody_shape = str(body_shape)
+	var strArea_shape = str(area_shape)
+	if strBody == "[KinematicBody2D:1228]":
 		Player_Detect = true
+		print(body)
+		print(strBody_id)
+		print(strBody_shape)
+		print(strArea_shape)
 
 func _on_Area2D_body_shape_exited(body_id, body, body_shape, area_shape):
 	var strBody = str(body)
-	if strBody == "[KinematicBody2D:1225]":
+	if strBody == "[KinematicBody2D:1228]":
 		print(body)
 		Player_Detect = false

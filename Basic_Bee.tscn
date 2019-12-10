@@ -3,7 +3,7 @@
 [ext_resource path="res://Test_Enemy.gd" type="Script" id=1]
 [ext_resource path="res://sprites/enemies/Bees/Bee.png" type="Texture" id=2]
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=2]
 radius = 3.72148
 height = 6.19895
 
@@ -19,4 +19,4 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource( 1 )
+shape = SubResource( 2 )
