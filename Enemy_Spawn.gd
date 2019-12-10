@@ -58,6 +58,6 @@ func _process(delta):
 		Spawn_Enemy()
 		Selected_Enemy == ""
 		Cooldown = 100
-	else:
-		Cooldown = Cooldown - 1
+	#else:
+	#	Cooldown = Cooldown - 1
 	Selected_Enemy = ""
