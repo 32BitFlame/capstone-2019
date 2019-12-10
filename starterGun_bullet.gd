@@ -1,5 +1,5 @@
 extends Node2D
-const speed = 2;
+const speed = 20;
 var velocityVector;
 var started = false;
 var damage = 3;
@@ -11,7 +11,6 @@ func StartMovement(x,y,tx, ty, _parent):
 	velocityVector = Vector2(x - tx,y -ty);
 	velocityVector = velocityVector.normalized() * -speed;
 	started = true
-	print("here1");
 
 func _physics_process(delta):
 	if(!started):
@@ -27,4 +26,3 @@ func _on_Area2D_body_entered(body):
 	else:
 		if(body.has_method("damage") && body):
 			body.damage(damage);
-	print("here3");

@@ -80,12 +80,10 @@ class FusionRifle:
 		hit.StartMovement(parent.position.x, parent.position.y ,mx,my, parent);
 		parent.get_parent().add_child(hit)
 	func fire_check():
-		print("VIBE CHECK1")
 		if(!ready):
 			return
 		var current_fire = Input.is_action_pressed("fire")
 		var lifted_fire = Input.is_action_just_released("fire")
-		print("VIBE CHECK")
 		if(lifted_fire && !is_firing):
 			_charge_iter = chargetime
 			print("reset")
@@ -111,9 +109,9 @@ class FusionRifle:
 class TestGun2:
 	extends Weapon
 	var parent
-	var firerate = 2;
-	var _fireIter = 0;
-	var accuracy = 0.5;
+	var firerate = 1;
+	var _fireIter = 100;
+	var accuracy = 1.55;
 	onready var lines = []
 	var shootVectorx
 	var shootVectory
@@ -121,7 +119,7 @@ class TestGun2:
 	func _init(_bullet_path, _parent).(_bullet_path):
 		self.parent = _parent
 		self.bullet = load(_bullet_path);
-		_name = "TestGun"
+		_name = "TestGun2"
 	func fire_check():
 		var fire_button = Input.is_action_pressed("fire")
 		var mx = parent.get_global_mouse_position().x
@@ -138,7 +136,6 @@ class TestGun2:
 			hit.StartMovement(parent.position.x, parent.position.y ,shootVector.x, shootVector.y, parent);
 			parent.get_parent().add_child(hit)
 			_fireIter = firerate
-			
 			
 		if(_fireIter > 0):
 			_fireIter -= 1
@@ -235,7 +232,7 @@ func _physics_process(delta):
 		#Debug
 		var weapon_drop = weapon_drop_scene.instance()
 		var vectorPlace = Vector2(position.y, position.y) + Vector2(10,0).rotated(rotation)
-		weapon_drop.start(position.x + 100, position.y, FusionRifle.new("res://starterGun_bullet.tscn", self))
+		weapon_drop.start(position.x + 100, position.y, TestGun2.new("res://starterGun_bullet.tscn", self))
 		weapon_drop.set_name("weapon_drop")
 		get_parent().add_child(weapon_drop)
 		
