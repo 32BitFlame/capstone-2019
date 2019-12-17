@@ -91,6 +91,9 @@ func _on_Area2D_body_shape_exited(body_id, body, body_shape, area_shape):
 		print(body)
 		Player_Detect = false
 
-func damage(amount: float, alignment: bool = true):
-	print("Enemy")
-	get_parent().remove_child(self)
+func damage(num):
+	print(num)
+	Hit_Points -= num;
+	if(Hit_Points <= 0):
+		print("dead");
+		get_parent().remove_child(self);

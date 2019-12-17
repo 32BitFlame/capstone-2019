@@ -2,7 +2,7 @@ extends Node2D
 const speed = 20;
 var velocityVector;
 var started = false;
-var damage = 3;
+var damage = 50;
 var parent;
 func StartMovement(x,y,tx, ty, _parent):
 	parent = _parent;
@@ -25,4 +25,6 @@ func _on_Area2D_body_entered(body):
 		return;
 	else:
 		if(body.has_method("damage") && body):
+			print("damage")
 			body.damage(damage);
+			get_parent().remove_child(self)
