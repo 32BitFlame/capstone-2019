@@ -1,21 +1,28 @@
-extends KinematicBody2D
-const speed = 500;
+extends Node2D
+const speed = 20;
 var velocityVector;
 var started = false;
 var damage = 3;
-var origin = null;
-func StartMovement(x,y,tx, ty):
-	started = true
+var parent;
+func StartMovement(x,y,tx, ty, _parent):
+	parent = _parent;
 	self.position = Vector2(x,y);
-	velocityVector = Vector2(x - tx,y - ty);
+	self.rotation = parent.rotation;
+	velocityVector = Vector2(x - tx,y -ty);
 	velocityVector = velocityVector.normalized() * -speed;
+	started = true
 
 func _physics_process(delta):
 	if(!started):
 		return
-	move_and_collide(velocityVector)
+	self.translate(velocityVector)
 
 func _on_Area2D_body_entered(body):
-	if(body.has_method("damage") && body):
-		body.damage(damage, false);
-		
+	if(!started):
+		return
+	if(body == parent):
+		print(parent)
+		return;
+	else:
+		if(body.has_method("damage") && body):
+			body.damage(damage);
