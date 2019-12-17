@@ -91,3 +91,10 @@ func _on_Area2D_body_shape_exited(body_id, body, body_shape, area_shape):
 	if strBody == "[KinematicBody2D:1239]":
 		print(body)
 		Player_Detect = false
+
+func damage(num):
+	print(num)
+	Hit_Points -= num;
+	if(Hit_Points <= 0):
+		print("dead");
+		get_parent().remove_child(self);
